@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+p {
+    margin-block-start: 2px;
+    margin-block-end: 2px;
+}
+
+button:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+

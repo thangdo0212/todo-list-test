@@ -1,0 +1,15 @@
+<div class="root">
+    <div>
+        <input placeholder="Search" class="search-input">
+        <div style="margin-top: 20px; height: 700px; overflow: auto;">
+            <app-task-item *ngFor="let task of taskList" [task]="task" (onUnChecked)="onUnCheck($event)" (onChecked)="onCheck($event)"></app-task-item>
+        </div>
+    </div>
+    <div class="bulk-wrapper">
+        <p>Bulk Action: </p>
+        <div>
+            <button class="done-btn">Done</button>
+            <button class="remove-btn" (click)="onRemoveMutiples()">Remove</button>
+        </div>
+    </div>
+</div>

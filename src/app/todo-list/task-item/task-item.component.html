@@ -1,0 +1,15 @@
+<div class="root">
+    <div class="item-wrapper">
+        <div class="name-task-wrapper">
+            <input type="checkbox" (change)="onChecking($event)">
+            <label class="name-task">{{ task.name }}</label>
+        </div>
+        <div>
+            <button class="detail-btn" (click)="onOpenDetailScreen()">Detail</button>
+            <button class="remove-btn" (click)="onDeleteSelectedTask()">Remove</button>
+        </div>
+    </div>
+    <div *ngIf="isShowDetail" style="border-top: 1px solid #ffff;">
+        <app-new-task [buttonTitle]="'Update'" [selectedTask]="task" (onUpdate)="onUpdateSelectedTask($event)" (onCloseDetailScreen)="onClose($event)"></app-new-task>
+    </div>
+</div>

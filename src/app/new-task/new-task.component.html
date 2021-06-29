@@ -1,0 +1,27 @@
+<div class="root">
+    <div class="create-task-area">
+        <input placeholder="Add new task ..." class="input-name" [formControl]="taskName"/>
+        <label *ngIf="isInValidTaskName" class="error-message">Title of task is required</label>
+        <div class="description-wrapper">
+            <p class="title">Description</p>
+            <textarea class="description-input" [formControl]="description">{{ description }}</textarea>
+        </div>
+        <div class="footer-wrapper">
+            <div style="width: 45%;">
+                <p class="title">Due Date</p>
+                <input type="date" class="date-picker" [formControl]="dueDate"/>
+                <label *ngIf="isInValidDueDate" class="error-message">Due Date in the past.</label>
+            </div>
+            <div style="width: 45%;">
+                <p class="title">Piority</p>
+                <select class="piority-selector" [formControl]="piority">
+                    <option>Low</option>
+                    <option>Normal</option>
+                    <option>High</option>
+                </select>
+            </div>
+        </div>
+        <button class="add-button" (click)="buttonTitle === 'Update' ? onUpdateTask() : onCreateNewTask()">{{ buttonTitle }}</button>
+        <button *ngIf="buttonTitle === 'Update'" class="add-button" style="background-color: red;" (click)="onClose()">Close</button>
+    </div>
+</div>

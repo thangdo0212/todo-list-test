@@ -1,0 +1,16 @@
+.root {
+    display: flex;
+    width: 1060px;
+    margin: 0 auto;
+    justify-content: space-between;
+    background-color: bisque;
+    border-radius: 5px;
+    height: 900px;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 5px;
+    border-bottom: 1px solid #fff;
+}

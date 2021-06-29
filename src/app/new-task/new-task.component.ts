@@ -22,19 +22,19 @@ export class NewTaskComponent implements OnInit, OnChanges {
   @Output() onCloseDetailScreen: EventEmitter<any> = new EventEmitter();
 
 
- 
+
   taskName = new FormControl('', [Validators.required]);
-  description = new FormControl('');  
+  description = new FormControl('');
   dueDate = new FormControl(formatDate(new Date(), 'yyyy-MM-dd', 'en'), [this.dueDateValidator]);
   piority = new FormControl('Normal');
 
   isInValidTaskName: boolean = false;
   isInValidDueDate: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
   ngOnChanges(): void {
-    if(this.selectedTask) {
+    if (this.selectedTask) {
       this.taskName.setValue(this.selectedTask.name);
       this.description.setValue(this.selectedTask.description);
       this.dueDate.setValue(formatDate(this.selectedTask.dueDate ? this.selectedTask.dueDate : new Date(), 'yyyy-MM-dd', 'en'));
@@ -44,15 +44,17 @@ export class NewTaskComponent implements OnInit, OnChanges {
     }
   }
 
-  dueDateValidator(control: AbstractControl): {[key: string]: boolean} | null  {
-    if (new Date(control.value).getTime() < new Date().getTime()) {
+  dueDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const tempDate = new Date(control.value);
+    const currentDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 0, 0, 0);
+    if (tempDate.getTime() < currentDate.getTime()) {
       return { dueDateInValid: true };
     }
     return null;
   }
 
   onValidate() {
-    if(this.taskName.valid && !this.dueDate.errors) {
+    if (this.taskName.valid && !this.dueDate.errors) {
       this.isInValidTaskName = false;
       this.isInValidDueDate = false;
       return true;
@@ -64,11 +66,11 @@ export class NewTaskComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    
+
   }
 
   onCreateNewTask() {
-    if(this.onValidate()) {
+    if (this.onValidate()) {
       const newTask: Task = {
         id: this.taskList.length,
         name: this.taskName.value,

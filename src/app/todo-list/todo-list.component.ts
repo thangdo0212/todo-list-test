@@ -9,17 +9,22 @@ import { Task } from 'src/model/type';
 export class TodoListComponent implements OnInit {
 
   @Input("taskList") taskList: any[] = [];
+  @Input("filteredList") filteredList: any[] = [];
+
 
   @Output() onRemoveMultiplesTask: EventEmitter<any> = new EventEmitter();
+  @Output() onFilter: EventEmitter<any> = new EventEmitter();
 
   checkedTask: Task[] = [];
+  searchValue: string = '';
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   onCheck(task: Task) {
+    console.log(task);
     this.checkedTask.push(task);
   }
 
@@ -30,5 +35,9 @@ export class TodoListComponent implements OnInit {
 
   onRemoveMutiples() {
     this.onRemoveMultiplesTask.emit(this.checkedTask);
+  }
+
+  onSearch() {
+    this.onFilter.emit(this.searchValue);
   }
 }

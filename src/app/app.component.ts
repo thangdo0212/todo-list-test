@@ -9,25 +9,28 @@ import { TodoListService } from 'src/service/todo-list.service';
 })
 export class AppComponent implements OnInit {
   public taskList: any[] = []
+  public filteredList: any[] = [];
+  searchValue: string = '';
 
   constructor(private todoListService: TodoListService) {
     const item = localStorage.getItem('tasks');
     this.taskList = item ? JSON.parse(item) : [];
     this.sortList();
+    this.filteredList = this.taskList;
   }
 
   ngOnInit(): void {
-    if (this.todoListService.subsVar == undefined) {    
-      this.todoListService.subsVar = this.todoListService.    
-      onUpdate.subscribe((task: Task) => {    
-        this.onUpdateTask(task);    
-      }); 
-      
-      this.todoListService.subsVar = this.todoListService.    
-      onDelete.subscribe((task: Task) => {    
-        this.onDeleteTask(task);    
-      }); 
-    }      
+    if (this.todoListService.subsVar == undefined) {
+      this.todoListService.subsVar = this.todoListService.
+        onUpdate.subscribe((task: Task) => {
+          this.onUpdateTask(task);
+        });
+
+      this.todoListService.subsVar = this.todoListService.
+        onDelete.subscribe((task: Task) => {
+          this.onDeleteTask(task);
+        });
+    }
   }
 
   onCreateNewTask(task: Task) {
@@ -48,19 +51,31 @@ export class AppComponent implements OnInit {
     this.taskList.splice(index, 1);
     this.sortList();
     localStorage.setItem('tasks', JSON.stringify(this.taskList));
+    this.filteredList = this.taskList.filter(t => t.name.includes(this.searchValue));
   }
 
   onDeleteMultiplesTask(tasks: Task[]) {
-    tasks.map(t => {
+    console.log('tasks', tasks);
+    tasks.forEach(t => {
       const index = this.taskList.findIndex(item => item.id == t.id);
       this.taskList.splice(index, 1);
     })
     this.sortList();
+    this.filteredList = this.taskList.filter(t => t.name.includes(this.searchValue));
     localStorage.setItem('tasks', JSON.stringify(this.taskList));
   }
 
+  onFilter(value: string) {
+    if (value !== '') {
+      this.searchValue = value;
+      this.filteredList = this.taskList.filter(t => t.name.includes(value));
+    } else {
+      this.filteredList = this.taskList;
+      this.searchValue = '';
+    }
+  }
+
   sortList() {
-    this.taskList.sort(function(a, b){return new Date(a['dueDate']).getTime() - new Date(b['dueDate']).getTime()});
-    console.log(this.taskList);
+    this.taskList.sort(function (a, b) { return new Date(a['dueDate']).getTime() - new Date(b['dueDate']).getTime() });
   }
 }

@@ -1,15 +1,13 @@
 <div class="root">
     <div>
         <p class="title">New Task</p>
-        <app-new-task 
-            [buttonTitle]="'Add'" 
-            [bgColor]="'bisque'" 
-            [taskList]="taskList"
+        <app-new-task [buttonTitle]="'Add'" [bgColor]="'bisque'" [taskList]="taskList"
             (onCreate)="onCreateNewTask($event)">
         </app-new-task>
     </div>
     <div style="border-left: 2px solid #fff">
         <p class="title">Todo List</p>
-        <app-todo-list [taskList]="taskList" (onRemoveMultiplesTask)="onDeleteMultiplesTask($event)"></app-todo-list>
+        <app-todo-list [taskList]="taskList" [filteredList]="filteredList"
+            (onRemoveMultiplesTask)="onDeleteMultiplesTask($event)" (onFilter)="onFilter($event)"></app-todo-list>
     </div>
 </div>

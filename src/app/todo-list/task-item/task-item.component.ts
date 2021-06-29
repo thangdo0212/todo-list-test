@@ -8,7 +8,7 @@ import { TodoListService } from 'src/service/todo-list.service';
   styleUrls: ['./task-item.component.css']
 })
 export class TaskItemComponent implements OnInit {
-  
+
   @Input('task') task: Task = new Task();
 
   @Output() onChecked: EventEmitter<any> = new EventEmitter();
@@ -31,15 +31,16 @@ export class TaskItemComponent implements OnInit {
     this.todoListService.onUpdateTask(task);
   }
 
-  onDeleteSelectedTask() {
-    this.todoListService.onDeleteTask(this.task);
+  onDeleteSelectedTask(task: Task) {
+    console.log(task);
+    this.todoListService.onDeleteTask(task);
   }
 
-  onChecking(event: any) {
-    if(event.target.checked) {
-      this.onChecked.emit(this.task);
+  onChecking(event: any, task: Task) {
+    if (event.target.checked) {
+      this.onChecked.emit(task);
     } else {
-      this.onUnChecked.emit(this.task);
+      this.onUnChecked.emit(task);
     }
   }
 

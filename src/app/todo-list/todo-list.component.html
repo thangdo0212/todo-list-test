@@ -1,8 +1,9 @@
 <div class="root">
     <div>
-        <input placeholder="Search" class="search-input">
+        <input placeholder="Search" class="search-input" [(ngModel)]="searchValue" (ngModelChange)="onSearch()">
         <div style="margin-top: 20px; height: 700px; overflow: auto;">
-            <app-task-item *ngFor="let task of taskList" [task]="task" (onUnChecked)="onUnCheck($event)" (onChecked)="onCheck($event)"></app-task-item>
+            <app-task-item *ngFor="let task of filteredList" [task]="task" (onUnChecked)="onUnCheck($event)"
+                (onChecked)="onCheck($event)"></app-task-item>
         </div>
     </div>
     <div class="bulk-wrapper">

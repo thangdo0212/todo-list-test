@@ -17,8 +17,6 @@ export class TodoListComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.taskList.sort(function(a, b){return new Date(a['dueDate']).getTime() - new Date(b['dueDate']).getTime()});
-    console.log(this.taskList);
   }
 
   onCheck(task: Task) {

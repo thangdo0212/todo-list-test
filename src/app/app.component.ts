@@ -13,7 +13,9 @@ export class AppComponent implements OnInit {
   constructor(private todoListService: TodoListService) {
     const item = localStorage.getItem('tasks');
     this.taskList = item ? JSON.parse(item) : [];
+    this.sortList();
   }
+
   ngOnInit(): void {
     if (this.todoListService.subsVar == undefined) {    
       this.todoListService.subsVar = this.todoListService.    
@@ -30,18 +32,21 @@ export class AppComponent implements OnInit {
 
   onCreateNewTask(task: Task) {
     this.taskList.push(task);
+    this.sortList();
     localStorage.setItem('tasks', JSON.stringify(this.taskList));
   }
 
   onUpdateTask(task: Task) {
     const index = this.taskList.findIndex(t => t.id == task.id);
     this.taskList[index] = task;
+    this.sortList();
     localStorage.setItem('tasks', JSON.stringify(this.taskList));
   }
 
   onDeleteTask(task: Task) {
     const index = this.taskList.findIndex(t => t.id == task.id);
     this.taskList.splice(index, 1);
+    this.sortList();
     localStorage.setItem('tasks', JSON.stringify(this.taskList));
   }
 
@@ -50,6 +55,12 @@ export class AppComponent implements OnInit {
       const index = this.taskList.findIndex(item => item.id == t.id);
       this.taskList.splice(index, 1);
     })
+    this.sortList();
     localStorage.setItem('tasks', JSON.stringify(this.taskList));
+  }
+
+  sortList() {
+    this.taskList.sort(function(a, b){return new Date(a['dueDate']).getTime() - new Date(b['dueDate']).getTime()});
+    console.log(this.taskList);
   }
 }
